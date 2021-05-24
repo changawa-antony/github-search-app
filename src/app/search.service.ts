@@ -1,4 +1,3 @@
-import { error } from '@angular/compiler/src/util';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { User } from "./user";
@@ -10,10 +9,10 @@ import { Repository } from "./repository";
 })
 export class SearchService {
 
-  user: User;
-  repository: Repository;
+  user: User
+  repository!: Repository;
   repoData = [];
-  newUserData: any;
+  newUserData: any = [];
 
   constructor(private http:HttpClient) {
     this.user = new User("",0,"","",new Date());
@@ -25,7 +24,7 @@ export class SearchService {
        bio:string,
        public_repos: number,
        login: string,
-       avatar_url:string
+       avatar_url:string,
        created_at: Date
      }
 
@@ -38,14 +37,25 @@ export class SearchService {
          this.user.created_at = response.created_at;
 
          resolve()
-       })
+       },error =>{
+        reject(error)
+      }
+       
+       )
 
-       error =>{
+       this.http.get<any>("https://api.github.com/users/"+username+"repos").toPromise().then(response =>{
+         for(let i=0; i<response.length; i++){
+           this.newUserData = new Repository(response[i].name,response[i].description,response[i].updated_at,response[i].clone_url,response[i].language)
+           
+         }
+
+         resolve()
+       },error=>(
          reject(error)
-       }
-
-
+       )
+       )
        
      })
+     return promise;
    }
 }

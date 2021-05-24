@@ -1,8 +1,11 @@
 export class User {
-        public bio!: string;
-        public public_repos!: number;
-        public login!: string;
-        public avatar_url!:string;
-        public created_at!:Date;
-    
+
+    constructor (
+        public bio: string,
+        public public_repos: Number,
+        public login: string,
+        public avatar_url: string,
+        public created_at: Date
+    ){}
+        
 }
