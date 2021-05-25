@@ -1,4 +1,4 @@
-export class User {
+export class MyClass {
     constructor (
         public bio: string,
         public public_repos: Number,
@@ -6,5 +6,4 @@ export class User {
         public avatar_url: string,
         public created_at: Date
     ){}
-        
 }

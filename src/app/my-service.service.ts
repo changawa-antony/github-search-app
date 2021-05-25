@@ -1,21 +1,22 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { User } from "./user";
+import { MyClass } from './my-class';
 import { Repository } from "./repository";
-
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
 
-  user: User
+export class MyService {
+
+  myClass: MyClass
   repository!: Repository;
   repoData = [];
   newUserData: any = [];
+  username = "changawa-antony"
 
   constructor(private http:HttpClient) {
-    this.user = new User("",0,"","",new Date());
+    this.myClass = new MyClass("",0,"","",new Date());
     this.repository = new Repository("","",new Date(),"","");
    }
 
@@ -30,11 +31,11 @@ export class SearchService {
 
      let promise = new Promise<void>((resolve, reject) =>{
        this.http.get<ApiResponse>("http://api.github.com/users/"+username).toPromise().then(response =>{
-         this.user.bio = response.bio;
-         this.user.public_repos = response.public_repos;
-         this.user.login = response.login;
-         this.user.avatar_url = response.avatar_url;
-         this.user.created_at = response.created_at;
+         this.myClass.bio = response.bio;
+         this.myClass.public_repos = response.public_repos;
+         this.myClass.login = response.login;
+         this.myClass.avatar_url = response.avatar_url;
+         this.myClass.created_at = response.created_at;
 
          resolve()
        },error =>{
@@ -60,3 +61,4 @@ export class SearchService {
      return promise;
    }
 }
+
